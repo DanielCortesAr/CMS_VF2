@@ -1,0 +1,154 @@
+{% extends 'base/menu.html' %}
+{% block content %}
+<main class="px-3">
+  <style>
+    .table-checkbox {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+
+    .table-checkbox th,
+    .table-checkbox td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .table-checkbox th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+
+    .table-checkbox tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .table-checkbox input[type="checkbox"] {
+      transform: scale(1.2);
+      margin: 0 5px;
+    }
+
+    .btn-generar-pdf {
+      background-color:rgb(46, 17, 231); /* Verde */
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+  
+    .btn-generar-pdf:hover {
+      background-color:rgb(17, 49, 113); /* Verde más oscuro */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el mouse */
+    }
+
+    .btn-generar-pdf:active {
+      background-color:rgb(12, 2, 84); /* Verde aún más oscuro cuando se hace clic */
+      transform: scale(0.98); /* Reduce ligeramente el tamaño al hacer clic */
+    }
+
+  </style>
+
+  <!-- Tabla con los datos y los checkboxes -->
+  <h3>Selecciona los datos que desea incluir en el PDF</h3>
+  <form method="post" action="{% url 'pdf_personalizado' pk=estadoFuerza.pk %}">
+    {% csrf_token %}
+    <table class="table-checkbox">
+      <tr>
+        <th></th>
+        <th>Datos</th>
+        <th>Incluir en el PDF</th>
+      </tr>
+      <tr>
+        <td>Fotografía</td>
+        <td>
+          {% if estadoFuerza.fotografia %}
+            <img src="{{ estadoFuerza.fotografia.url }}" alt="Fotografía" style="width: 90px; height: 90px;">
+          {% else %}
+            Sin imagen
+          {% endif %}
+        </td>
+        <td><input type="checkbox" name="include_fotografia" id="fotografia" checked></td>
+      </tr>
+      <tr>
+        <td>Datos Personales (Nombre, Teléfono, Género)</td>
+        <td>{{ estadoFuerza.nombre }} <br> {{ estadoFuerza.telefono }} <br> {{ estadoFuerza.genero }}</td>
+        <td><input type="checkbox" name="include_datos_personales" id="datos_personales" checked></td>
+      </tr>
+      <tr>
+        <td>Dirección</td>
+        <td>{{ estadoFuerza.direccion|default:"Sin dirección" }}</td>
+        <td><input type="checkbox" name="include_direccion" id="direccion" checked></td>
+      </tr>
+      <tr>
+        <td>Datos de adscripción</td>
+        <td>
+          {{ estadoFuerza.adscripcion_actual|default:"Sin adscripción" }} <br>
+          {{ estadoFuerza.fiscalia|default:"Sin adscripción" }} <br>
+          {{ estadoFuerza.seccion|default:"Sin adscripción" }} <br>
+        </td>
+        <td><input type="checkbox" name="include_adscripcion" id="adscripcion" checked></td>
+      </tr>
+      <tr>
+        <td>Datos del Vehículo</td>
+        <td>{{ estadoFuerza.vehiculo|default:"No asignado" }}</td>
+        <td><input type="checkbox" name="include_vehiculo" id="vehiculo" checked></td>
+      </tr>
+      <tr>
+        <td>Datos del Arma Larga</td>
+        <td>{{ estadoFuerza.arma_larga|default:"No asignado" }}</td>
+        <td><input type="checkbox" name="include_arma_larga" id="arma_larga" checked></td>
+      </tr>
+      <tr>
+        <td>Datos del Arma Corta</td>
+        <td>{{ estadoFuerza.arma_corta|default:"No asignado" }}</td>
+        <td><input type="checkbox" name="include_arma_corta" id="arma_corta" checked></td>
+      </tr>
+      <tr>
+        <td>Formaciones</td>
+        <td>
+          {% if estadoFuerza.formacion_c3 %}
+            Formación C3<br>
+          {% endif %}
+          {% if estadoFuerza.formacion_inicial %}
+            Formación Inicial<br>
+          {% endif %}
+          {% if estadoFuerza.cuip %}
+            CUIP<br>
+          {% endif %}
+          {% if estadoFuerza.competencias_basicas %}
+            Competencias Básicas<br>
+          {% endif %}
+          {% if estadoFuerza.evaluacion_desempeno %}
+            Evaluación de Desempeño<br>
+          {% endif %}
+          {% if estadoFuerza.cup %}
+            CUP<br>
+          {% endif %}
+          {% if not estadoFuerza.formacion_c3 and not estadoFuerza.formacion_inicial and not estadoFuerza.cuip and not estadoFuerza.competencias_basicas and not estadoFuerza.evaluacion_desempeno and not estadoFuerza.cup %}
+            Sin formaciones
+          {% endif %}
+        </td>
+        <td><input type="checkbox" name="include_formaciones" id="formaciones" checked></td>
+      </tr>
+      <tr>
+        <td>Folios</td>
+        <td>
+          No. Oficio: {{ estadoFuerza.folios|default:"Sin folios" }} <br>
+          CURP: {{ estadoFuerza.folios.curp|default:"Sin folios" }} <br>
+          CUIP: {{ estadoFuerza.folios.cuip|default:"Sin folios" }} <br>
+          Folio de credencial: {{ estadoFuerza.folios.folio_credencial|default:"Sin folios" }} <br>
+          TAZA: {{ estadoFuerza.folios.taza|default:"Sin folios" }} <br>
+          Seguro Social: {{ estadoFuerza.folios.seguro_social|default:"Sin folios" }}
+        </td>
+        <td><input type="checkbox" name="include_folios" id="folios" checked></td>
+      </tr>
+    </table>
+    <button type="submit" class="btn btn-custom-blue btn-sm btn-rounded mt-2 px-5 py-3">Generar PDF</button>
+  </form>
+</main>
+{% endblock %}

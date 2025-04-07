@@ -1,0 +1,316 @@
+.nav-masthead .nav-link {
+    color: rgba(19, 17, 130, 0.5);
+    border-bottom: .25rem solid transparent;
+  }
+  
+  .nav-masthead .nav-link:hover,
+  .nav-masthead .nav-link:focus {
+    border-bottom-color: rgba(255, 255, 255, .25);
+  }
+  
+  .nav-masthead .nav-link + .nav-link {
+    margin-left: 1rem;
+  }
+  
+  .nav-masthead .active {
+    color: #152F4A;
+    border-bottom-color: #fff;
+  }
+
+  .bg-card {
+    background-color: #152F4A;
+  }
+
+/* Contenedor principal */
+.custom-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  flex-grow: 1;
+  max-width: 90%; /* Ajusta el ancho máximo para evitar que se desborde */
+}
+
+/* Tabla */
+.results-table {
+  width: 100%;
+  margin-top: 20px; /* Espacio entre la barra de búsqueda y la tabla */
+}
+
+/* Botón "Ver Gráficas" */
+.action-button {
+  margin-left: 0%; /* Empuja el botón hacia la derecha */
+}
+
+:root {
+  --custom-blue: #152F4A;
+}
+/* Estilo para el botón azul personalizado */
+.btn-custom-blue {
+  background-color: #152F4A;
+  border-color: var(--custom-blue);
+  color: white;
+}
+
+.btn-custom-blue:hover {
+  background-color: #206ec2;
+  color: white ;
+}
+
+
+  /* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+main.px-3 {
+  max-width: 1800px; /* Ancho máximo para pantallas grandes */
+  margin: 20px 100px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Barra de búsqueda */
+.input-group {
+  width: 100%;
+  max-width: 500px; /* Restringe el ancho en pantallas grandes */
+  margin: 0 auto 20px auto;
+}
+
+#advanced-search-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#advanced-search-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Botón de Agregar */
+.mb-4.align-middle {
+  text-align: center;
+}
+
+.btn-rounded {
+  border-radius: 20px !important;
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  text-align: center;
+  background-color: #152F4A;
+  color: rgb(251, 251, 251);
+}
+
+.table tbody td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+
+/* Ajustar el ancho de las etiquetas */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #555555;
+  width: 100%; /* Etiquetas ocupan todo el ancho */
+}
+
+/* Imagen redondeada */
+img.rounded-circle {
+  object-fit: cover; /* Asegura que la imagen no se distorsione */
+}
+
+/* Colores para los estados */
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-activo {
+  background-color: #28a745; /* Verde */
+  color: #ffffff;
+}
+
+.status-inactivo {
+  background-color: #dc3545; /* Rojo */
+  color: #ffffff;
+}
+
+.status-en-proceso {
+  background-color: #ffc107; /* Amarillo */
+  color: #000000;
+}
+
+/* Acciones */
+td a.btn-primary,
+td button.btn-danger {
+  margin: 0 5px;
+}
+
+
+/* Estilo para el contenedor personalizado */
+.custom-background {
+  background: url('../images/Fondo-login.gif') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start; /* Alinea el contenido a la izquierda */
+  align-items: center; /* Centra verticalmente el contenido */
+  padding-left: 10%; /* Agrega un margen izquierdo */
+}
+
+/* Contenedor que alinea la tarjeta a la izquierda */
+.container-left {
+  max-width: 400px; /* Ancho máximo de la tarjeta */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+/* Estilo para el formulario */
+.card {
+  background-color: rgba(0, 0, 0, 0.3); /* Fondo semi-transparente */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+  /* Ajustar tabla para pantallas pequeñas */
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  /* Ajustar botones de acciones */
+  td a.btn-primary,
+  td button.btn-danger {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustar barra de búsqueda */
+  .input-group {
+    flex-direction: column;
+  }
+
+  #advanced-search-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #advanced-search-button {
+    width: 100%;
+  }
+
+  /* Ajustar botón de agregar */
+  .mb-4.align-middle {
+    text-align: center;
+  }
+
+  .btn-rounded {
+    width: 100%;
+  }
+}
+
+  /* Estilo general del paginador */
+.pagination {
+  display: flex;
+  justify-content: center; /* Centra la paginación horizontalmente */
+  list-style: none; /* Elimina los puntos de lista */
+  padding: 0; /* Elimina el relleno predeterminado */
+}
+
+/* Estilo de cada elemento de la paginación */
+.pagination .page-item {
+  margin: 0 5px; /* Espaciado entre los elementos */
+}
+
+/* Estilo de los enlaces (botones) */
+.pagination .page-link {
+  color: #6c757d; /* Color del texto */
+  background-color: #ffffff; /* Color de fondo azul */
+  border: 1px solid #152F4A; /* Borde azul */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 5px 10px; /* Relleno interno */
+  text-decoration: none; /* Elimina el subrayado */
+  transition: background-color 0.3s ease; /* Efecto suave al pasar el mouse */
+}
+
+/* Cambia el color cuando el usuario pasa el mouse sobre los botones */
+.pagination .page-link:hover {
+  color: #ffffff ;
+  background-color: #152F4A; /* Azul más oscuro */
+  border-color: #C09F77; /* Borde más oscuro */
+}
+
+/* Estilo para el botón activo */
+.pagination .page-item.active .page-link {
+  background-color: #152F4A; /* Azul más oscuro para el botón activo */
+  border-color: #C09F77; /* Borde más oscuro */
+  color: #ffffff; /* Texto blanco */
+}
+
+/* Estilo para los botones deshabilitados ("Previous" o "Next") */
+.pagination .page-item.disabled .page-link {
+  color: #6c757d; /* Gris claro */
+  background-color: #ffffff; /* Fondo blanco */
+  border-color: #dee2e6; /* Borde gris claro */
+  cursor: not-allowed; /* Cursor de no permitido */
+}

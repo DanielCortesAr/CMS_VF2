@@ -1,0 +1,44 @@
+{% load static %}
+
+{% block content %}
+<!-- Enlaza el archivo CSS -->
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'base/css/estilos.css' %}">
+
+<div class="custom-background">
+  <div class="container-left">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="mb-md-5 mt-md-4 pb-5">
+            <img class="mb-4" src="{% static 'base/images/fge_logo.jpg' %}" alt="Logo de la Fiscalía General del Estado" width="100" height="100">
+            
+            <!-- Mensaje de error -->
+            {% if form.errors %}
+              <div class="alert alert-danger">
+                Tu nombre de usuario o contraseña son incorrectos.
+              </div>
+            {% endif %} 
+
+            <p class="text-white-50 mb-5">Ingrese su usuario y contraseña</p>
+
+            <div class="form-outline form-white mb-4 mt-4">
+              <label for="id_username" class="form-label"></label>
+              <input type="text" class="form-control" name="username" id="id_username" placeholder="Nombre de Usuario" autocomplete="username" required>
+            </div>
+
+            <div class="form-outline form-white mb-4">
+              <label for="id_password" class="form-label"></label>
+              <input type="password" class="form-control" name="password" id="id_password" placeholder="Contraseña" autocomplete="current-password" required>
+            </div>
+
+            <button class="btn btn-outline-light btn-lg px-5" type="submit">Iniciar sesión</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

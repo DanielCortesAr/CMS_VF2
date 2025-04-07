@@ -1,0 +1,122 @@
+{% extends 'base/menu.html' %}
+{% block content %}
+<main class="px-3">
+  
+  {% if request.user.is_authenticated %}
+    <h1>{% if request.user.is_authenticated %}Bienvenido {{ user.username | upper }} {% endif %}</h1>
+    <div class="custom-container">
+
+      <!-- Barra de búsqueda -->
+      <div class="search-bar">
+        <form method="GET" action="{% url 'Inicio' %}" style="display: flex; width: 100%;">
+          <!-- Campo de búsqueda -->
+          <input 
+            type="text" 
+            class="form-control" 
+            id="advanced-search-input" 
+            name="q" 
+            placeholder="Buscar..." 
+            value="{{ request.GET.q }}" 
+            style="flex-grow: 1;"
+          >
+          <!-- Botón de búsqueda -->
+          <button type="submit" class="btn btn-custom-blue" id="advanced-search-button">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+      
+        <!-- Botón Ver Gráficas -->
+        <div class="action-button">
+          <a href="graficas" class="btn btn-custom-blue">Ver Gráficas</a>
+        </div>
+    </div>
+      
+<!-- Tabla -->
+<table class="table align-middle mb-0 bg-white mt-4">
+  <thead class="bg-light">
+    <tr>
+      <th>Imagen</th>
+      <th>Placa</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Color</th>
+      <th>Año</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in vehiculos %}
+    <tr>
+      <td data-label="Imagen">
+        <img
+          src="{{ item.fotografia_vehiculo.url }}"
+          alt="Foto de {{ item.placa }}"
+          style="width: 90px; height: 90px"
+        />
+      </td>
+      <td data-label="Placa">{{ item.placas }}</td>
+      <td data-label="Marca">{{ item.marca }}</td>
+      <td data-label="Modelo">{{ item.modelo }}</td>
+      <td data-label="Color">{{ item.color }}</td>
+      <td data-label="Año">{{ item.año|date:"Y" }}</td>
+      <td data-label="Acciones">
+        <!-- Botón de Imprimir PDF -->
+        <a href="#" class="btn btn-custom-blue btn-sm btn-rounded mt-2">Imprimir PDF</a>
+        <a href="#" class="btn btn-custom-blue btn-sm btn-rounded mt-2">PDF personalizado</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Contenedor principal para el total y la paginación -->
+<div class="d-flex align-items-center mt-3">
+  <!-- Paginación  -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start mt-3">
+      <!-- Botón "Previous" -->
+      {% if estado_fuerza.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ request.GET.q }}&page={{ estado_fuerza.previous_page_number }}">Anterior</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Anterior</span>
+      </li>
+      {% endif %}
+
+      <!-- Números de página -->
+      {% for num in estado_fuerza.paginator.page_range %}
+      <li class="page-item {% if estado_fuerza.number == num %}active{% endif %}">
+        <a class="page-link" href="?q={{ request.GET.q }}&page={{ num }}">{{ num }}</a>
+      </li>
+      {% endfor %}
+
+      <!-- Botón "Next" -->
+      {% if estado_fuerza.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ request.GET.q }}&page={{ estado_fuerza.next_page_number }}">Siguiente</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Siguiente</span>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!-- Total de registros -->
+  <div class="ms-4">
+    <p class="text-muted mb-0">
+      Total de vehículos: <strong>{{ total_registros }}</strong>
+    </p>
+  </div>
+
+</div>
+
+  {% else %}
+    <p>Hola</p>
+  {% endif %}
+</main>
+{% endblock %}

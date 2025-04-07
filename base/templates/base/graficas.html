@@ -1,0 +1,261 @@
+{% extends 'base/menu.html' %}
+{% block content %}
+<main class="px-3">
+    <h1>Gráficas de los vehiculos</h1>
+    <!-- Gráfica de Modelo -->
+    <div style="width: 60%; margin: auto; margin-bottom: 40px;">
+        <h3>Modelo</h3>
+        <canvas id="modeloChart"></canvas>
+    </div>
+    <br>
+    <!-- Gráfica de año -->
+    <div style="width: 50%; margin: auto; margin-bottom: 40px;">
+        <h3>Año</h3>
+        <canvas id="añoChart"></canvas>
+    </div>
+    <br>
+
+
+    <!-- Gráfica de Cargo -->
+    <div style="width: 60%; margin: auto; margin-bottom: 40px;">
+      <h3>Cargo</h3>
+      <canvas id="cargoChart"></canvas>
+    </div>
+    <br>
+    <!-- Gráfica de Sección -->
+    <div style="width: 60%; margin: auto; margin-bottom: 40px;">
+      <h3>Sección</h3>
+      <canvas id="seccionChart"></canvas>
+    </div>
+    <br>
+    <!-- Gráfica de Armas -->
+    <div style="width: 60%; margin: auto; margin-bottom: 40px;">
+      <h3>Armas</h3>
+      <canvas id="armasChart"></canvas>
+    </div>
+    <br>
+    <!-- Tabla de Fiscalía -->
+    <div style="width: 80%; margin: auto; margin-bottom: 40px;">
+      <h3>Fiscalía</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre de la Fiscalía</th>
+            <th scope="col">Cantidad de Empleados</th>
+          </tr>
+        </thead>
+        <tbody id="fiscaliaTableBody">
+          <!-- Aquí se cargarán los datos dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+</main>
+
+<!-- Script para las gráficas -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    fetch("{% url 'grafica_estado_fuerza' %}")
+      .then(response => response.json())
+      .then(data => {
+        // Función para generar etiquetas con colores y valores
+        const generateLegendLabels = (chart) => {
+          const dataset = chart.data.datasets[0];
+          return chart.data.labels.map((label, index) => ({
+            text: `${label} (${dataset.data[index]})`, // Concatenar etiqueta y valor
+            fillStyle: dataset.backgroundColor[index],
+            strokeStyle: dataset.borderColor[index],
+            hidden: false,
+            lineCap: 'butt',
+            lineDash: [],
+            lineDashOffset: 0.0,
+            lineJoin: 'miter',
+            lineWidth: 2,
+            pointStyle: 'rect',
+            fontColor: '#666',
+            fontSize: 12,
+            fontStyle: 'normal',
+            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            textAlign: 'left'
+          }));
+        };
+
+        // Gráfica de Modelo
+        const modeloCtx = document.getElementById('modeloChartChart').getContext('2d');
+        new Chart(modeloCtx, {
+          type: 'bar',
+          data: {
+            labels: data.modelo.labels,
+            datasets: [{
+              label: 'Vehiculos por modelo',
+              data: data.modelo.values,
+              backgroundColor: ['#4CAF50', '#FF9800', '#F44336'],
+              borderColor: ['#4CAF50', '#FF9800', '#F44336'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  generateLabels: generateLegendLabels
+                }
+              }
+            }
+          }
+        });
+
+        // Gráfica de Género
+        const generoCtx = document.getElementById('generoChart').getContext('2d');
+        new Chart(generoCtx, {
+          type: 'pie',
+          data: {
+            labels: data.genero.labels,
+            datasets: [{
+              label: 'Empleados por Género',
+              data: data.genero.values,
+              backgroundColor: ['#FF6384', '#36A2EB'],
+              borderColor: ['#FF6384', '#36A2EB'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  generateLabels: generateLegendLabels
+                }
+              },
+              tooltip: {
+                enabled: true
+              }
+            }
+          }
+        });
+
+        // Gráfica de Cargo
+        const cargoCtx = document.getElementById('cargoChart').getContext('2d');
+        new Chart(cargoCtx, {
+          type: 'bar',
+          data: {
+            labels: data.cargo.labels,
+            datasets: [{
+              label: 'Empleados por Cargo',
+              data: data.cargo.values,
+              backgroundColor: ['#795548', '#607D8B', '#FF5722', '#FF9800', '#00BCD4'], // Colores personalizados
+              borderColor: ['#795548', '#607D8B', '#FF5722', '#FF9800', '#00BCD4'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  generateLabels: generateLegendLabels
+                }
+              },
+              tooltip: {
+                enabled: true
+              }
+            }
+          }
+        });
+
+        // Gráfica de Sección
+        const seccionCtx = document.getElementById('seccionChart').getContext('2d');
+        new Chart(seccionCtx, {
+          type: 'bar',
+          data: {
+            labels: data.seccion.labels,
+            datasets: [{
+              label: 'Empleados por Sección',
+              data: data.seccion.values,
+              backgroundColor: ['#9C27B0', '#E91E63', '#673AB7'],
+              borderColor: ['#9C27B0', '#E91E63', '#673AB7'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  generateLabels: generateLegendLabels
+                }
+              }
+            }
+          }
+        });
+
+        // Gráfica de Armas
+        const armasCtx = document.getElementById('armasChart').getContext('2d');
+        new Chart(armasCtx, {
+          type: 'pie',
+          data: {
+            labels: data.armas.labels,
+            datasets: [{
+              label: 'Total de Armas',
+              data: data.armas.values,
+              backgroundColor: ['#FF9800', '#36A2EB'], // Colores para Arma Larga y Arma Corta
+              borderColor: ['#FF9800', '#36A2EB'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  generateLabels: generateLegendLabels
+                }
+              },
+              tooltip: {
+                enabled: true
+              }
+            }
+          }
+        });
+
+        // Tabla de Fiscalía
+        const fiscaliaTableBody = document.getElementById('fiscaliaTableBody');
+        data.fiscalia.labels.forEach((label, index) => {
+          const row = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          const countCell = document.createElement('td');
+
+          nameCell.textContent = label;
+          countCell.textContent = data.fiscalia.values[index];
+
+          row.appendChild(nameCell);
+          row.appendChild(countCell);
+          fiscaliaTableBody.appendChild(row);
+        });
+      });
+  });
+</script>
+{% endblock %}

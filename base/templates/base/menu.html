@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es" class="h-100">
+
+{% load static %}
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Principal</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/cover/">
+  <link href={% static 'base/css/bootstrap.min.css' %} rel="stylesheet">
+  <link href={% static 'base/css/estilos.css' %} rel="stylesheet">
+  <link rel="icon" href="{% static 'base/images/fge_logo.jpg' %}">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+</head>
+
+<body class="d-flex h-100 text-center">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="">
+    <div>
+      <!--<h3 class="float-md-start mb-0">FISCALÍA GENERAL DEL ESTADO DE MICHOACÁN</h3>-->
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{% url 'Inicio' %}">Inicio</a>
+        {% if request.user.is_authenticated %} 
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'exit' %}">Cerrar sesión</a>
+            {% if request.user.is_superuser or request.user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="nav-link fw-bold py-1 px-0">Administrador</a>
+            {% endif %}
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+  
+</div>
+  </body>
+</html>
+   
